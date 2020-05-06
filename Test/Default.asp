@@ -5,12 +5,12 @@
 <%
 	' Register pages to test
 	Call ASPUnit.AddPages(Array( _
-		"/test/ASPUnitLibrary.asp", _
-		"/test/ASPUnitTesterFactoryMethods.asp", _
-		"/test/ASPUnitTesterAssertionMethods.asp", _
-		"/test/ASPUnitTesterControlMethods.asp", _
-		"/test/ASPUnitTesterBehaviors.asp", _
-		"/test/ASPUnitRunner.asp" _
+		"ASPUnitLibrary.asp", _
+		"ASPUnitTesterFactoryMethods.asp", _
+		"ASPUnitTesterAssertionMethods.asp", _
+		"ASPUnitTesterControlMethods.asp", _
+		"ASPUnitTesterBehaviors.asp", _
+		"ASPUnitRunner.asp" _
 	))
 
 	' Execute tests
