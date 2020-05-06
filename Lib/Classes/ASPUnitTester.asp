@@ -106,6 +106,10 @@
 			NotSame = Assert(Not (varActual Is varExpected), strDescription)
 		End Function
 
+		Public Function EqualDictionaries(varActual, varExpected, strDescription)
+			EqualDictionaries = Assert(matchDictionaries(varActual, varExpected), strDescription)
+		End Function
+
 		' Methods to run module tests
 
 		Public Sub Run()
@@ -186,6 +190,27 @@
 				End If
 			End If
 		End Sub
+
+		Private Function matchDictionaries(dic1, dic2)
+			matchDictionaries = false
+			If typeName(dic1) <> "Dictionary" or typeName(dic2) <> "Dictionary" Then _
+				Exit Function
+			If dic1.Count <> dic2.Count Then _
+				Exit Function
+			Dim dic1Keys : dic1Keys = dic1.Keys
+			Dim dic2Keys : dic2Keys = dic2.Keys
+			If UBound(dic1Keys) <> UBound(dic2Keys) Then _
+				Exit Function
+			Dim i, current
+			For i = 0 To UBound(dic1Keys)
+				current = dic1Keys(i)
+				If not dic2.Exists(current) Then _
+					Exit Function
+				If not dic1(current) = dic2(current) Then _
+					Exit Function
+			Next
+			matchDictionaries = true
+		End Function
 	End Class
 
 	' Private Classses

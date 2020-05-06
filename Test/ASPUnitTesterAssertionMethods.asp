@@ -61,6 +61,17 @@
 		) _
 	)
 
+	Call ASPUnit.AddModule( _
+		ASPUnit.CreateModule( _
+			"ASPUnitTester EqualDictionaries Assertion Method Tests", _
+			Array( _
+				ASPUnit.CreateTest("ASPUnitTesterEqualDictionariesPassedTruthy"), _
+				ASPUnit.CreateTest("ASPUnitTesterEqualDictionariesPassedFalsy") _
+			), _
+			objLifecycle _
+		) _
+	)
+
 	Call ASPUnit.Run()
 
 	' Create a global instance of ASPUnitTester for testing
@@ -158,5 +169,27 @@
 
 		Set objB = Nothing
 		Set objA = Nothing
+	End Sub
+
+	' EqualDictionaries Assertion Method Tests
+	Sub ASPUnitTesterEqualDictionariesPassedTruthy()
+		Dim dic1 : set dic1 = Server.CreateObject("Scripting.Dictionary")
+		Dim dic2 : set dic2 = Server.CreateObject("Scripting.Dictionary")
+		dic1.add "key1", "value1"
+		dic2.add "key1", "value1"
+		Call ASPUnit.Equal(objService.EqualDictionaries(dic1, dic2, ""), True, "EqualDictionaries method should return truthy with equal dictionaries")
+		
+		Set dic1 = Nothing
+		Set dic2 = Nothing
+	End Sub
+	Sub ASPUnitTesterEqualDictionariesPassedFalsy()
+		Dim dic1 : set dic1 = Server.CreateObject("Scripting.Dictionary")
+		Dim dic2 : set dic2 = Server.CreateObject("Scripting.Dictionary")
+		dic1.add "key1", "value1"
+		dic2.add "key2", "value2"
+		Call ASPUnit.Equal(objService.EqualDictionaries(dic1, dic2, ""), False, "EqualDictionaries method should return falsy with not equal dictionaries")
+		
+		Set dic1 = Nothing
+		Set dic2 = Nothing
 	End Sub
 %>

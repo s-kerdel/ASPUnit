@@ -87,6 +87,10 @@
 			Call m_Tester.NotSame(varActual, varExpected, strDescription)
 		End Function
 
+		Public Function EqualDictionaries(varActual, varExpected, strDescription)
+			Call m_Tester.EqualDictionaries(varActual, varExpected, strDescription)
+		End Function
+
 		' UI Service Facade
 
 		Public Property Set Theme(ByRef objValue)
