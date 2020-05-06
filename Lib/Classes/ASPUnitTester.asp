@@ -192,7 +192,7 @@
 		End Sub
 
 		Private Function matchDictionaries(dic1, dic2)
-			matchDictionaries = false
+			matchDictionaries = False
 			If typeName(dic1) <> "Dictionary" or typeName(dic2) <> "Dictionary" Then _
 				Exit Function
 			If dic1.Count <> dic2.Count Then _
@@ -204,12 +204,26 @@
 			Dim i, current
 			For i = 0 To UBound(dic1Keys)
 				current = dic1Keys(i)
-				If not dic2.Exists(current) Then _
+				' For each key make sure a same key exists in the other dictionary.
+				If Not dic2.Exists(current) Then _
 					Exit Function
-				If not dic1(current) = dic2(current) Then _
+				' Make sure the typeName of the variables are equal.
+				If Not typeName(dic1(current)) = typeName(dic2(current)) Then _
 					Exit Function
+				' Comparison of Nothing objects should be done with 'is', but redundant.
+				If typeName(dic1(current)) <> "Nothing" Then
+					' Sub-dictionary objects should be matched too by passing it into a sub-call.
+					If typeName(dic1(current)) = "Dictionary" Then
+						If Not matchDictionaries(dic1(current), dic2(current)) Then _
+							Exit Function
+					Else
+						' For other types the content should match.
+						If Not dic1(current) = dic2(current) Then _
+							Exit Function
+					End If
+				End If
 			Next
-			matchDictionaries = true
+			matchDictionaries = True
 		End Function
 	End Class
 

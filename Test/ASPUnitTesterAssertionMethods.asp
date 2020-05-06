@@ -172,22 +172,58 @@
 	End Sub
 
 	' EqualDictionaries Assertion Method Tests
+	
 	Sub ASPUnitTesterEqualDictionariesPassedTruthy()
 		Dim dic1 : set dic1 = Server.CreateObject("Scripting.Dictionary")
 		Dim dic2 : set dic2 = Server.CreateObject("Scripting.Dictionary")
-		dic1.add "key1", "value1"
-		dic2.add "key1", "value1"
+
+		dic1.add "name", "multi-dict"
+		dic1.add "version", 1.0
+		dic1.add "date", Date
+		dic1.add "specs", Server.CreateObject("Scripting.Dictionary")
+		dic1.item("specs").add "isNew", True
+		dic1.item("specs").add "isEmpty", Empty
+		dic1.item("specs").add "isNull", Null
+		dic1.item("specs").add "isNothing", Nothing
+
+		dic2.add "name", "multi-dict"
+		dic2.add "version", 1.0
+		dic2.add "date", Date
+		dic2.add "specs", Server.CreateObject("Scripting.Dictionary")
+		dic2.item("specs").add "isNew", True
+		dic2.item("specs").add "isEmpty", Empty
+		dic2.item("specs").add "isNull", Null
+		dic2.item("specs").add "isNothing", Nothing
+
 		Call ASPUnit.Equal(objService.EqualDictionaries(dic1, dic2, ""), True, "EqualDictionaries method should return truthy with equal dictionaries")
 		
 		Set dic1 = Nothing
 		Set dic2 = Nothing
 	End Sub
+
 	Sub ASPUnitTesterEqualDictionariesPassedFalsy()
 		Dim dic1 : set dic1 = Server.CreateObject("Scripting.Dictionary")
 		Dim dic2 : set dic2 = Server.CreateObject("Scripting.Dictionary")
-		dic1.add "key1", "value1"
-		dic2.add "key2", "value2"
-		Call ASPUnit.Equal(objService.EqualDictionaries(dic1, dic2, ""), False, "EqualDictionaries method should return falsy with not equal dictionaries")
+
+		dic1.add "name", "multi-dict"
+		dic1.add "version", 1.0
+		dic1.add "date", Date
+		dic1.add "specs", Server.CreateObject("Scripting.Dictionary")
+		dic1.item("specs").add "isNew", True
+		dic1.item("specs").add "isEmpty", Empty
+		dic1.item("specs").add "isNull", Null
+		dic1.item("specs").add "isNothing", Nothing
+
+		dic2.add "name", "multi-dict"
+		dic2.add "version", 1.0
+		dic2.add "date", Date
+		dic2.add "specs", Server.CreateObject("Scripting.Dictionary")
+		dic2.item("specs").add "isNew", True
+		dic2.item("specs").add "isEmpty", False
+		dic2.item("specs").add "isNull", Null
+		dic2.item("specs").add "isNothing", Nothing
+
+		Call ASPUnit.Equal(objService.EqualDictionaries(dic1, dic2, ""), False, "EqualDictionaries method should return falsey with unequal dictionaries")
 		
 		Set dic1 = Nothing
 		Set dic2 = Nothing
