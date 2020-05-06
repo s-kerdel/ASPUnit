@@ -56,6 +56,7 @@ End Function
 - `NotEqual(actual, expected, description)`: Tests if `actual` is not equal to `expected`, uses simple `=` operator.
 - `Same(actual, expected, description)`: Tests if `actual` refers to the same object as `expected`, uses `Is` operator.
 - `NotSame(actual, expected, description)`: Tests if `actual` does not refer to the same object as `expected`, uses `Is` operator.
+- `EqualDictionaries(actual, expected, description)`: Tests if `actual` is equal to `expected`, uses dictionary key by key comparison.
 
 ## Example
 
