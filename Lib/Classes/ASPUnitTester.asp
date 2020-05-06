@@ -166,7 +166,7 @@
 			Call GetRef(objTest.Name)()
 
 			If Err.Number <> 0 Then
-				Call Assert(False, Err.Description)
+				Call Assert(False, Err.Source & " (Code: " & Err.Number & "), " & Err.Description & ".")
 			End If
 
 			Err.Clear()
