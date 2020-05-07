@@ -7,7 +7,7 @@
 
 					<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 					<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-					<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+					<link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
 
 					<style type="text/css">
 						body {
@@ -242,9 +242,9 @@
 									</div>
 									<div class="col-md-4">
 										<ul class="list-unstyled">
-											<li><a href="https://github.com/rpeterclark/aspunit/"><i class="icon-github"></i> GitHub Project</a></li>
-											<li><a href="https://github.com/rpeterclark/aspunit/wiki/"><i class="icon-book"></i> Documentation</a></li>
-											<li><a href="https://github.com/rpeterclark/aspunit/issues/"><i class="icon-bug"></i> Issues</a></li>
+											<li><a href="https://github.com/s-kerdel/aspunit/"><i class="icon-github"></i> GitHub Project</a></li>
+											<li><a href="https://github.com/s-kerdel/aspunit/wiki/"><i class="icon-book"></i> Documentation</a></li>
+											<li><a href="https://github.com/s-kerdel/aspunit/issues/"><i class="icon-bug"></i> Issues</a></li>
 										</ul>
 									</div>
 									<div class="col-md-4">
@@ -273,15 +273,17 @@
 
 									<div class="page-module-tests">
 										{{#each tests}}
-											<div class="page-module-test page-module-test-{{#if passed}}pass{{else}}fail{{/if}}">
-												{{#if passed}}
-													<i class="page-module-test-icon page-module-test-icon-pass glyphicon glyphicon-ok"></i>
-												{{else}}
-													<i class="page-module-test-icon page-module-test-icon-fail glyphicon glyphicon-remove"></i>
-												{{/if}}
-												<span class="page-module-test-name">{{name}}:</span>
-												<span class="page-module-test-description">{{description}}</span>
-											</div>
+											{{#each assertions}}
+												<div class="page-module-test page-module-test-{{#if passed}}pass{{else}}fail{{/if}}">
+													{{#if passed}}
+														<i class="page-module-test-icon page-module-test-icon-pass glyphicon glyphicon-ok"></i>
+													{{else}}
+														<i class="page-module-test-icon page-module-test-icon-fail glyphicon glyphicon-remove"></i>
+													{{/if}}
+													<span class="page-module-test-name">{{../name}}:</span>
+													<span class="page-module-test-description">{{description}}</span>
+												</div>
+											{{/each}}
 										{{/each}}
 									</div>
 								</div>
