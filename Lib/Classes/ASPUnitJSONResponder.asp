@@ -62,7 +62,9 @@
 					For k = 0 To (objTest.Assertions.Count - 1)
 						Call objStream.WriteText("{")
 						Call objStream.WriteText(JSONBooleanPair("passed", objTest.Assertions(k).Passed) & ",")
-						Call objStream.WriteText(JSONStringPair("description", objTest.Assertions(k).Description))
+						Call objStream.WriteText(JSONStringPair("description", objTest.Assertions(k).Description) & ",")
+						Call objStream.WriteText(JSONStringPair("actual", "(" & TypeName(objTest.Assertions(k).Actual) & ") " & objTest.Assertions(k).Actual) & ",")
+						Call objStream.WriteText(JSONStringPair("expected", "(" & TypeName(objTest.Assertions(k).Expected) & ") " & objTest.Assertions(k).Expected))
 						Call objStream.WriteText("}")
 
 						If k < (objTest.Assertions.Count - 1) Then

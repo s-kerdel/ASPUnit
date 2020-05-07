@@ -184,6 +184,16 @@
 							color: #C0392B;
 						}
 
+						.page-module-test-error {
+							border: 1px solid #C0392B;
+							margin-top: 10px;
+							padding: 3px;
+							color: #333333
+						}
+						.page-module-test-error-text{
+							color: #333333
+						}
+
 						@media (max-width: 768px) {
 							body {
 								padding-top: 260px;
@@ -282,6 +292,14 @@
 													{{/if}}
 													<span class="page-module-test-name">{{../name}}:</span>
 													<span class="page-module-test-description">{{description}}</span>
+													{{#unless passed}}
+														<br/>
+														<p class="page-module-test-error">
+															<span class="page-module-test-error-text"><b>Actual Variable: </b> {{actual}}</span>
+															<br/>
+															<span class="page-module-test-error-text"><b>Expected Variable: </b> {{expected}}</span>
+														</p>
+													{{/unless}}
 												</div>
 											{{/each}}
 										{{/each}}

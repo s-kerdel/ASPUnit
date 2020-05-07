@@ -77,13 +77,15 @@
 
 		' Assertion Methods
 
-		Private Function Assert(blnResult, strDescription)
+		Private Function Assert(blnResult, varActual, varExpected, strDescription)
 			If IsObject(m_CurrentTest) Then
 				' Register every Assert call to the current test.
 				Dim iAssertIndex : iAssertIndex = m_CurrentTest.Assertions.Count
 				m_CurrentTest.Assertions.Add iAssertIndex, New ASPUnitTestAssertion
 				m_CurrentTest.Assertions(iAssertIndex).Passed = blnResult
 				m_CurrentTest.Assertions(iAssertIndex).Description = strDescription
+				m_CurrentTest.Assertions(iAssertIndex).Actual = varActual
+				m_CurrentTest.Assertions(iAssertIndex).Expected = varExpected
 				' Passed (Unit) will mark result red if one or more assertions failed.
 				m_CurrentTest.Passed = m_CurrentTest.Passed and blnResult
 			End If
@@ -92,27 +94,33 @@
 		End Function
 
 		Public Function Ok(blnResult, strDescription)
-			Ok = Assert(blnResult, strDescription)
+			Ok = blnResult
+			Assert blnResult, blnResult, True, strDescription
 		End Function
 
 		Public Function Equal(varActual, varExpected, strDescription)
-			Equal = Assert((varActual = varExpected), strDescription)
+			Equal = (varActual = varExpected)
+			Assert Equal, varActual, varExpected, strDescription
 		End Function
 
 		Public Function NotEqual(varActual, varExpected, strDescription)
-			NotEqual = Assert(Not (varActual = varExpected), strDescription)
+			NotEqual = Not (varActual = varExpected)
+			Assert NotEqual, varActual, varExpected, strDescription
 		End Function
 
 		Public Function Same(varActual, varExpected, strDescription)
-			Same = Assert((varActual Is varExpected), strDescription)
+			Same = (varActual Is varExpected)
+			Assert Same, varActual, varExpected, strDescription
 		End Function
 
 		Public Function NotSame(varActual, varExpected, strDescription)
-			NotSame = Assert(Not (varActual Is varExpected), strDescription)
+			NotSame = Not (varActual Is varExpected)
+			Assert NotSame, varActual, varExpected, strDescription
 		End Function
 
 		Public Function EqualDictionaries(varActual, varExpected, strDescription)
-			EqualDictionaries = Assert(matchDictionaries(varActual, varExpected), strDescription)
+			EqualDictionaries = matchDictionaries(varActual, varExpected)
+			Assert EqualDictionaries, varActual, varExpected, strDescription
 		End Function
 
 		' Methods to run module tests
@@ -308,7 +316,14 @@
 	Class ASPUnitTestAssertion
 		Public _
 			Passed, _
-			Description
+			Description, _
+			Actual, _
+			Expected
+		
+		Private Sub Class_Initialize
+			Actual = Empty
+			Expected = Empty
+		End Sub
 	End Class
 
 	Class ASPUnitTestLifecycle
