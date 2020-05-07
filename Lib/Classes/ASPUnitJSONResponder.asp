@@ -28,7 +28,7 @@
 			Dim objStream, _
 				objModule, _
 				objTest, _
-				i, j, _
+				i, j, k, _
 				strReturn
 
 			Set objStream = Server.CreateObject("ADODB.Stream")
@@ -49,7 +49,7 @@
 				Call objStream.WriteText(JSONStringPair("name", objModule.Name) & ",")
 				Call objStream.WriteText(JSONNumberPair("testCount", objModule.TestCount) & ",")
 				Call objStream.WriteText(JSONNumberPair("passCount", objModule.PassCount) & ",")
-				Call objStream.WriteText(JSONNumberPair("failCount", (objModule.FailCount)) & ",")
+				Call objStream.WriteText(JSONNumberPair("failCount", objModule.FailCount) & ",")
 				Call objStream.WriteText(JSONBooleanPair("passed", objModule.Passed) & ",")
 				Call objStream.WriteText(JSONNumberPair("duration", objModule.Duration) & ",")
 				Call objStream.WriteText(JSONString("tests") & ":[")
@@ -58,13 +58,23 @@
 					Call objStream.WriteText("{")
 					Call objStream.WriteText(JSONStringPair("name", objTest.Name) & ",")
 					Call objStream.WriteText(JSONBooleanPair("passed", objTest.Passed) & ",")
-					Call objStream.WriteText(JSONStringPair("description", objTest.Description))
+					Call objStream.WriteText(JSONString("assertions") & ":[")
+					For k = 0 To (objTest.Assertions.Count - 1)
+						Call objStream.WriteText("{")
+						Call objStream.WriteText(JSONBooleanPair("passed", objTest.Assertions(k).Passed) & ",")
+						Call objStream.WriteText(JSONStringPair("description", objTest.Assertions(k).Description))
+						Call objStream.WriteText("}")
+
+						If k < (objTest.Assertions.Count - 1) Then
+							Call objStream.WriteText(",")
+						End If
+					Next
+					Call objStream.WriteText("]")
 					Call objStream.WriteText("}")
 
 					If j < (objModule.Tests.Count - 1) Then
 						Call objStream.WriteText(",")
 					End If
-
 					Set objTest = Nothing
 				Next
 				Call objStream.WriteText("]")
