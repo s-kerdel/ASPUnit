@@ -79,8 +79,13 @@
 
 		Private Function Assert(blnResult, strDescription)
 			If IsObject(m_CurrentTest) Then
-				m_CurrentTest.Passed = blnResult
-				m_CurrentTest.Description = strDescription
+				' Register every Assert call to the current test.
+				Dim iAssertIndex : iAssertIndex = m_CurrentTest.Assertions.Count
+				m_CurrentTest.Assertions.Add iAssertIndex, New ASPUnitTestAssertion
+				m_CurrentTest.Assertions(iAssertIndex).Passed = blnResult
+				m_CurrentTest.Assertions(iAssertIndex).Description = strDescription
+				' Passed (Unit) will mark result red if one or more assertions failed.
+				m_CurrentTest.Passed = m_CurrentTest.Passed and blnResult
 			End If
 
 			Assert = blnResult
@@ -146,9 +151,13 @@
 				Call RunModuleTest(objTest)
 				Call RunTestModuleTeardown(objModule)
 
-				If objTest.Passed Then
-					objModule.PassCount = objModule.PassCount + 1
-				End If
+				Dim iAssertIndex
+				For iAssertIndex = 0 To (objTest.Assertions.Count - 1)
+					objModule.TestCount = objModule.TestCount + 1
+					If objTest.Assertions(iAssertIndex).Passed Then
+						objModule.PassCount = objModule.PassCount + 1
+					End If
+				Next
 
 				Set objTest = Nothing
 			Next
@@ -258,20 +267,18 @@
 			Tests, _
 			Lifecycle, _
 			Duration, _
+			TestCount, _
 			PassCount
 
 		Private Sub Class_Initialize()
 			Set Tests = Server.CreateObject("System.Collections.ArrayList")
+			TestCount = 0
 			PassCount = 0
 		End Sub
 
 		Private Sub Class_Terminate()
 			Set Tests = Nothing
 		End Sub
-
-		Public Property Get TestCount
-			TestCount = Tests.Count()
-		End Property
 
 		Public Property Get FailCount
 			FailCount = (TestCount - PassCount)
@@ -285,6 +292,21 @@
 	Class ASPUnitTest
 		Public _
 			Name, _
+			Passed, _
+			Assertions
+		
+		Private Sub Class_Initialize
+			Set Assertions = Server.CreateObject("Scripting.Dictionary")
+			Passed = True
+		End Sub
+
+		Private Sub Class_Terminate
+			Set Assertions = Nothing
+		End Sub
+	End Class
+
+	Class ASPUnitTestAssertion
+		Public _
 			Passed, _
 			Description
 	End Class
