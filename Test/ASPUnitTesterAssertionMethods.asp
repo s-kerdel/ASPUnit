@@ -63,6 +63,17 @@
 
 	Call ASPUnit.AddModule( _
 		ASPUnit.CreateModule( _
+			"ASPUnitTester InstanceOf Assertion Method Tests", _
+			Array( _
+				ASPUnit.CreateTest("ASPUnitTesterInstanceOfWithRightType"), _
+				ASPUnit.CreateTest("ASPUnitTesterInstanceOfWithWrongType") _
+			), _
+			objLifecycle _
+		) _
+	)
+
+	Call ASPUnit.AddModule( _
+		ASPUnit.CreateModule( _
 			"ASPUnitTester EqualDictionaries Assertion Method Tests", _
 			Array( _
 				ASPUnit.CreateTest("ASPUnitTesterEqualDictionariesPassedTruthy"), _
@@ -171,8 +182,22 @@
 		Set objA = Nothing
 	End Sub
 
+	' InstanceOf Assertion Method Tests
+
+	Sub ASPUnitTesterInstanceOfWithRightType()
+		Dim regex
+		Set regex = New RegExp
+		Call ASPUnit.Equal(objService.InstanceOf(regex, "IRegExp2", ""), True, "Regexp instance should be of IRegExp2 type")
+	End Sub
+
+	Sub ASPUnitTesterInstanceOfWithWrongType()
+		Dim notRegexp
+		notRegexp = "Not a string"
+		Call ASPUnit.Equal(objService.InstanceOf(notRegexp, "IRegExp2", ""), False, "String instance should not be of IRegExp2 type")
+	End Sub
+
 	' EqualDictionaries Assertion Method Tests
-	
+
 	Sub ASPUnitTesterEqualDictionariesPassedTruthy()
 		Dim dic1 : set dic1 = Server.CreateObject("Scripting.Dictionary")
 		Dim dic2 : set dic2 = Server.CreateObject("Scripting.Dictionary")

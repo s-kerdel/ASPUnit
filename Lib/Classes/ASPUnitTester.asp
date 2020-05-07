@@ -118,6 +118,10 @@
 			Assert NotSame, varActual, varExpected, strDescription
 		End Function
 
+		Public Function InstanceOf(objToCheck, strExpectedType, strDescription)
+			InstanceOf = Equal(TypeName(objToCheck), strExpectedType, strDescription)
+		End Function
+
 		Public Function EqualDictionaries(varActual, varExpected, strDescription)
 			EqualDictionaries = matchDictionaries(varActual, varExpected)
 			Assert EqualDictionaries, varActual, varExpected, strDescription

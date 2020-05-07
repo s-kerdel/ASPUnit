@@ -87,6 +87,10 @@
 			Call m_Tester.NotSame(varActual, varExpected, strDescription)
 		End Function
 
+		Public Function InstanceOf(objToCheck, strExpectedType, strDescription)
+			Call m_Tester.InstanceOf(objToCheck,strExpectedType, strDescription)
+		End Function
+
 		Public Function EqualDictionaries(varActual, varExpected, strDescription)
 			Call m_Tester.EqualDictionaries(varActual, varExpected, strDescription)
 		End Function
