@@ -99,12 +99,22 @@
 		End Function
 
 		Public Function Equal(varActual, varExpected, strDescription)
-			Equal = (varActual = varExpected)
+			' Null variables fail using the '=' operator.
+			If isNull(varActual) OR isNull(varExpected) Then
+				Equal = (IsNull(varActual) = isNull(varExpected))
+			Else
+				Equal = (varActual = varExpected)
+			End If
 			Assert Equal, varActual, varExpected, strDescription
 		End Function
 
 		Public Function NotEqual(varActual, varExpected, strDescription)
-			NotEqual = Not (varActual = varExpected)
+			' Null variables fail using the '=' operator.
+			If isNull(varActual) OR isNull(varExpected) Then
+				NotEqual = Not (IsNull(varActual) = isNull(varExpected))
+			Else
+				NotEqual = Not (varActual = varExpected)
+			End If
 			Assert NotEqual, varActual, varExpected, strDescription
 		End Function
 
