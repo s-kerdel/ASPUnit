@@ -30,6 +30,17 @@
 
 	Call ASPUnit.AddModule( _
 		ASPUnit.CreateModule( _
+			"ASPUnitTester StrictEqual Assertion Method Tests", _
+			Array( _
+				ASPUnit.CreateTest("ASPUnitTesterStrictEqualPassedTruthy"), _
+				ASPUnit.CreateTest("ASPUnitTesterStrictEqualPassedFalsey") _
+			), _
+			objLifecycle _
+		) _
+	)
+
+	Call ASPUnit.AddModule( _
+		ASPUnit.CreateModule( _
 			"ASPUnitTester NotEqual Assertion Method Tests", _
 			Array( _
 				ASPUnit.CreateTest("ASPUnitTesterNotEqualPassedTruthy"), _
@@ -114,6 +125,16 @@
 
 	Sub ASPUnitTesterEqualPassedFalsey()
 		Call ASPUnit.Equal(objService.Equal(True, False, ""), False, "Equal method should return falsey with unequal values")
+	End Sub
+
+	' StrictEqual Assertion Method Tests
+
+	Sub ASPUnitTesterStrictEqualPassedTruthy()
+		Call ASPUnit.StrictEqual(objService.Equal(1.0, 1.0, ""), True, "StrictEqual method should return truthy with equal values")
+	End Sub
+
+	Sub ASPUnitTesterStrictEqualPassedFalsey()
+		Call ASPUnit.StrictEqual(objService.Equal(1.0, "1.0", ""), False, "StrictEqual method should return falsey with unequal values")
 	End Sub
 
 	' NotEqual Assertion Method Tests

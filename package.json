@@ -1,24 +1,27 @@
 {
   "name": "aspunit",
   "description": "A Classic ASP Unit Testing Framework",
-  "version": "0.1.1-0",
-  "homepage": "https://github.com/rpeterclark/aspunit",
+  "version": "0.2.1",
+  "homepage": "https://github.com/s-kerdel/ASPUnit",
   "author": {
-    "name": "R. Peter Clark",
-    "email": "rpeterclark@gmail.com",
-    "url": "http://www.rpeterclark.com"
+    "name": "S. Kerdel",
+    "email": "shiva@exdev.nl",
+    "url": "https://www.exdev.nl"
   },
+  "contributors": [
+    {"name":"R. Peter Clark", "email":"rpeterclark@gmail.com", "url":"http://www.rpeterclark.com"}
+  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/rpeterclark/aspunit.git"
+    "url": "git://github.com/s-kerdel/ASPUnit.git"
   },
   "bugs": {
-    "url": "https://github.com/rpeterclark/aspunit/issues"
+    "url": "https://github.com/s-kerdel/ASPUnit/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/rpeterclark/aspunit/blob/master/LICENSE-MIT"
+      "url": "https://github.com/s-kerdel/ASPUnit/blob/master/LICENSE-MIT"
     }
   ],
   "scripts": {

@@ -9,7 +9,7 @@
 			Version
 
 		Private Sub Class_Initialize()
-			Version = "0.1.0"
+			Version = "0.2.1"
 
 			Set m_Runner = New ASPUnitRunner
 			Set m_Tester = New ASPUnitTester
