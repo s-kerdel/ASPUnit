@@ -63,8 +63,8 @@
 						Call objStream.WriteText("{")
 						Call objStream.WriteText(JSONBooleanPair("passed", objTest.Assertions(k).Passed) & ",")
 						Call objStream.WriteText(JSONStringPair("description", objTest.Assertions(k).Description) & ",")
-						Call objStream.WriteText(JSONStringPair("actual", "(" & TypeName(objTest.Assertions(k).Actual) & ") " & objTest.Assertions(k).Actual) & ",")
-						Call objStream.WriteText(JSONStringPair("expected", "(" & TypeName(objTest.Assertions(k).Expected) & ") " & objTest.Assertions(k).Expected))
+						Call objStream.WriteText(JSONVariablePair("actual", objTest.Assertions(k).Actual) & ",")
+						Call objStream.WriteText(JSONVariablePair("expected", objTest.Assertions(k).Expected))
 						Call objStream.WriteText("}")
 
 						If k < (objTest.Assertions.Count - 1) Then
@@ -109,6 +109,15 @@
 			JSONStringPair = JSONString(strName) & ":" & JSONString(strValue)
 		End Function
 
+		Private Function JSONVariablePair(strName, varValue)
+			Dim valueType : valueType = "(" & TypeName(varValue) & ")"
+			If IsObject(varValue) OR IsNull(varValue) OR IsEmpty(varValue) Then
+				JSONVariablePair = JSONString(strName) & ":" & JSONString(valueType)
+			Else
+				JSONVariablePair = JSONString(strName) & ":" & JSONString(valueType & " " & varValue)
+			End If
+		End Function
+
 		Private Function JSONNumberPair(strName, varValue)
 			JSONNumberPair = JSONString(strName) & ":" & (FormatNumber(varValue, 0, -1, -1, -1))
 		End Function
@@ -119,17 +128,20 @@
 			JSONBooleanPair = JSONString(strName) & ":" & output
 		End Function
 
-		Private Function JSONStringEscape(strValue)
+		Private Function JSONStringEscape(varValue)
 			Dim strReturn
-
-			strReturn = strValue
-
-			strReturn = Replace(strReturn, "\", "\\")
-			strReturn = Replace(strReturn, """", "\""")
-			strReturn = Replace(strReturn, vbLf, "\n")
-			strReturn = Replace(strReturn, vbCr, "\n")
-			strReturn = Replace(strReturn, vbCrLf, "\n")
-			strReturn = Replace(strReturn, vbTab, "\t")
+			
+			If IsObject(varValue) OR IsNull(varValue) OR IsEmpty(varValue) Then
+				strReturn = TypeName(varValue)
+			Else
+				strReturn = varValue
+				strReturn = Replace(strReturn, "\", "\\")
+				strReturn = Replace(strReturn, """", "\""")
+				strReturn = Replace(strReturn, vbLf, "\n")
+				strReturn = Replace(strReturn, vbCr, "\n")
+				strReturn = Replace(strReturn, vbCrLf, "\n")
+				strReturn = Replace(strReturn, vbTab, "\t")
+			End If
 
 			JSONStringEscape = strReturn
 		End Function

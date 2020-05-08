@@ -84,6 +84,17 @@
 				m_CurrentTest.Assertions.Add iAssertIndex, New ASPUnitTestAssertion
 				m_CurrentTest.Assertions(iAssertIndex).Passed = blnResult
 				m_CurrentTest.Assertions(iAssertIndex).Description = strDescription
+
+				If IsObject(varActual) Then ' Objects require `Set`.
+					Set m_CurrentTest.Assertions(iAssertIndex).Actual = varActual
+				Else	m_CurrentTest.Assertions(iAssertIndex).Actual = varActual
+				End If
+				
+				If IsObject(varExpected) Then ' Objects require `Set`.
+					Set m_CurrentTest.Assertions(iAssertIndex).Expected = varExpected
+				Else    m_CurrentTest.Assertions(iAssertIndex).Expected = varExpected
+				End If
+
 				m_CurrentTest.Assertions(iAssertIndex).Actual = varActual
 				m_CurrentTest.Assertions(iAssertIndex).Expected = varExpected
 				' Passed (Unit) will mark result red if one or more assertions failed.
