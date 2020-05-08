@@ -175,7 +175,7 @@
 			Next
 			intTimeEnd = Timer
 
-			objModule.Duration = Round((intTimeEnd - intTimestart), 3)
+			objModule.Duration = (intTimeEnd - intTimestart) * 1000
 
 			Set m_CurrentModule = Nothing
 		End Sub
