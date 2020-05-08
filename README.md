@@ -53,6 +53,7 @@ End Function
 
 - `Ok(value, description)`: Tests if `value` is `True`
 - `Equal(actual, expected, description)`: Tests if `actual` is equal to `expected`, uses simple `=` operator (or isNull if `null` is found).
+- `StrictEqual(actual, expected, description)`: Tests if `actual` is equal to `expected` and ensure the type is the same, uses `TypeName` function and simple `=` operator (or isNull if `null` is found).
 - `NotEqual(actual, expected, description)`: Tests if `actual` is not equal to `expected`, uses simple `=` operator (or isNull if `null` is found).
 - `Same(actual, expected, description)`: Tests if `actual` refers to the same object as `expected`, uses `Is` operator.
 - `NotSame(actual, expected, description)`: Tests if `actual` does not refer to the same object as `expected`, uses `Is` operator.

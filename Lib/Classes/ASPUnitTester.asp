@@ -108,6 +108,20 @@
 			Assert Equal, varActual, varExpected, strDescription
 		End Function
 
+		Public Function StrictEqual(varActual, varExpected, strDescription)
+			If TypeName(varActual) = TypeName(varExpected) Then
+				' Null variables fail using the '=' operator.
+				If isNull(varActual) OR isNull(varExpected) Then
+					StrictEqual = (IsNull(varActual) = isNull(varExpected))
+				Else
+					StrictEqual = (varActual = varExpected)
+				End If
+			Else
+				StrictEqual = False
+			End If
+			Assert StrictEqual, varActual, varExpected, strDescription
+		End Function
+
 		Public Function NotEqual(varActual, varExpected, strDescription)
 			' Null variables fail using the '=' operator.
 			If isNull(varActual) OR isNull(varExpected) Then

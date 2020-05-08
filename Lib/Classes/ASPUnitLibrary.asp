@@ -75,6 +75,10 @@
 			Call m_Tester.Equal(varActual, varExpected, strDescription)
 		End Function
 
+		Public Function StrictEqual(varActual, varExpected, strDescription)
+			Call m_Tester.StrictEqual(varActual, varExpected, strDescription)
+		End Function
+
 		Public Function NotEqual(varActual, varExpected, strDescription)
 			Call m_Tester.NotEqual(varActual, varExpected, strDescription)
 		End Function
